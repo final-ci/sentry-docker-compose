@@ -1,0 +1,31 @@
+sentry:
+  image: slafs/sentry
+  env_file: environment
+  volumes:
+    - /var/tmp/sentry:/data
+  ports:
+    - "80:9000"
+  links:
+    - postgres:postgresdb
+    - redis:sentry_redis1
+    - sentryCeleryWorker:sentryCeleryWorker
+
+sentryCeleryWorker:
+  image: slafs/sentry
+  env_file: environment
+  command: celery worker -B
+  volumes:
+    - /var/tmp/sentry:/data
+  links:
+    - postgres:postgresdb
+    - redis:sentry_redis1
+
+postgres:
+  image: postgres:9.4
+  volumes:
+    - /var/tmp/sentry_postgresql/data:/var/lib/postgresql/data
+
+redis:
+  image: redis:3
+  #expose:
+  #  - "6379"

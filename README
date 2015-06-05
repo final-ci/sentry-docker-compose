@@ -1,0 +1,9 @@
+Docker Compose for sentry-docker
+--------------------------------
+
+https://github.com/slafs/sentry-docker
+
+
+copy `environment.example` to `environment` and change passwords/keys.
+
+
